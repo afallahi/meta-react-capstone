@@ -1,0 +1,12 @@
+
+.booking-container {
+    grid-column: 6 / span 2;
+    grid-row: 15;
+
+
+    .booking-form {
+        display: grid;
+        max-width: 200px;
+        gap: 20px;
+    }
+}
