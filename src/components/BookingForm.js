@@ -1,70 +1,155 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useReducer, useState } from "react";
 
-function BookingForm({ availableTimes, onSubmit }) {
+import BookingConfirmation from './BookingConfirmation';
+import BookingWarning from "./BookingWarning";
+import BookingSuccess from "./BookingSuccess";
 
-    const [booking, setBooking] = useState({date: '', time: '', guests: 0, occasion: ''});
-    const navigate = useNavigate();
-    
+const warningReducer = (state, action) => {
+  if (action.type === 'push') {
+    return [...state, {
+      key:  action.key
+    , text: action.text
+    }];
+  }
+  else if (action.type === 'pop') {
+    return state.filter((item) => (action.key !== item.key));
+  }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        onSubmit(booking);
-        setBooking({date: '', time: '', guests: 0, occasion: ''});
-        navigate('/confirmation');
-      };
-    
-    return (
-        <div className='booking-container'>
-        <form className='booking-form' onSubmit={handleSubmit}>
-          <label htmlFor='res-date'>Choose date</label>
-          <input
-            type='date'
-            id='res-date'
-            value={booking.date}
-            onChange={(e) => setBooking({ ...booking, date: e.target.value })}
-            required
-          />
-          <label htmlFor='res-time'>Choose time</label>
-          <select
-            id='res-time'
-            data-testid='updateTime'
-            value={booking.time}
-            onChange={(e) => setBooking({ ...booking, time: e.target.value })}
-            required
-          >
-            {Array.isArray(availableTimes) ? (
-              availableTimes.map((item, index) => (
-                <option key={index}>{item}</option>
-              ))
-            ) : (
-              <option>Loading times...</option>
-            )}
-          </select>
-          <label htmlFor='guests'>Number of guests</label>
-          <input
-            type='number'
-            min='1'
-            max='10'
-            id='guests'
-            value={booking.guests}
-            onChange={(e) => setBooking({ ...booking, guests: e.target.value })}
-            required
-          />
-          <label htmlFor='occasion'>Occasion</label>
-          <select
-            id='occasion'
-            value={booking.occasion}
-            onChange={(e) => setBooking({ ...booking, occasion: e.target.value })}
-            required
-          >
-            <option>Birthday</option>
-            <option>Anniversary</option>
-          </select>
-          <input type='submit' value='Make Your reservation' />
-        </form>
-      </div>
-      );
-}
+  return [];
+};
+
+const BookingForm = (props) => {
+
+  const [openConfirm, setOpenConfirm] = useState(false);
+  const [openWarning, setOpenWarning] = useState(false);
+
+  const [warnings,    reduceWarnings] = useReducer(warningReducer, []);
+
+  const checkFormFields = (e) => {
+    e.preventDefault();
+
+    reduceWarnings({type:''});
+
+    let warningCheck = false;
+    if (props.currentBooking.numOfGuests < 1) {
+      reduceWarnings({
+        type: 'push'
+      , key:  'guests'
+      , text: 'Please select the number of guests.'
+      });
+      warningCheck = true;
+    }
+    if (!props.currentBooking.occasion) {
+      reduceWarnings({
+        type: 'push'
+      , key:  'occasion'
+      , text: 'Please enter the occasion.'
+      });
+      warningCheck = true;
+    }
+    if (props.currentBooking.time === '') {
+      reduceWarnings({
+        type: 'push'
+      , key:  'time'
+      , text: 'There are no times available on the date selected.'
+      });
+      warningCheck = true;
+    }
+
+    (warningCheck)
+    ? setOpenWarning(true)
+    : setOpenConfirm(true)
+    ;
+  };
+
+  const confirmBooking = () => {
+    setOpenConfirm(false);
+    props.onSubmit()
+  };
+
+  return (
+    <form id='booking-form' onSubmit={checkFormFields}>
+      <BookingConfirmation
+        openState={openConfirm}
+        cancel={() => setOpenConfirm(false)}
+        confirm={confirmBooking}
+        currentBooking={props.currentBooking}
+        appElement={document.getElementById('root')}
+      />
+      <BookingWarning
+        openState={openWarning}
+        cancel={() => setOpenWarning(false)}
+        warnings={warnings}
+        appElement={document.getElementById('root')}
+      />
+      <BookingSuccess
+        openState={props.openSuccess}
+        message={props.message}
+        confirm={() => props.setOpenSuccess(false)}
+        appElement={document.getElementById('root')}
+      />
+      <fieldset>
+        <legend><h2>Reserve a Table</h2></legend>
+        <h3>Booking Until: <nobr>{props.maxDateStr}</nobr></h3>
+        <label htmlFor='res-date'>Date: </label>
+        <input
+          type="date"
+          id='res-date'
+          value={props.currentBooking.date}
+          min={props.todayStr}
+          max={props.maxDateStr}
+          onChange={(e) => props.updateBooking({
+            type: 'date'
+          , value: e.target.value
+          })}
+        />
+        <label htmlFor='res-time'>Time: </label>
+        <select
+          id='res-time'
+          value={props.currentBooking.time}
+          onChange={(e) => props.updateBooking({
+            type: 'time'
+          , value: e.target.value
+          })}
+        >
+          {
+            (props.availableTimes[props.currentBooking.date].length > 0)
+            ? props.availableTimes[props.currentBooking.date].map(
+                (time) => (
+                  <option key={time} value={time}>{time}</option>
+                )
+              )
+            : <option key='blank' value=''>No Times Available</option>
+          }
+        </select>
+        <label htmlFor='res-occasion'>Occasion:</label>
+        <input
+          type="text"
+          id='res-occasion'
+          maxLength={25}
+          value={props.currentBooking.occasion}
+          onChange={(e) => props.updateBooking({
+            type: 'occasion'
+          , value: e.target.value
+          })}
+        />
+        <label htmlFor='res-guests'>Number of Guests:</label>
+        <label htmlFor='res-guests' id='guests-state'>{props.currentBooking.numOfGuests}</label>
+        <input
+          id='res-guests'
+          value={props.currentBooking.numOfGuests}
+          type="range"
+          min={0}
+          max={10}
+          onChange={(e) => props.updateBooking({
+            type: 'numOfGuests'
+          , value: e.target.value
+          })}
+        />
+        <input type="submit" value="Confirm Reservation" />
+      </fieldset>
+    </form>
+  );
+};
 
 export default BookingForm;

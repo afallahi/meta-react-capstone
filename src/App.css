@@ -2,37 +2,892 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+#root {
+  display: grid;
+  grid-template-rows: repeat(5, auto) 1fr;
+  grid-template-columns: repeat(12, 1fr);
+  row-gap: 8vh;
+  column-gap: 2vw;
+
+  margin: 0 1vw 0 1vw;
+
+  font-family: 'Markazi Text';
+  font-weight: 500;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+img {
+  width: 100%;
+  height: auto;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+h1 {
+  font-size: 40pt;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+input[type=button], input[type=submit], button {
+  background-color: #FDBABB;
+  color: #333333;
+
+  padding: 16px 32px;
+  margin: 4px 2px;
+  border-radius: 16pt;
+
+  width: fit-content;
+
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+
+  font-weight: 500;
+  font-size: 18pt;
+}
+
+input[type=button]:hover, input[type=submit]:hover, button:hover {
+  background-color: #EE9972;
+}
+
+header {
+  grid-column: 3/ span 2;
+  grid-row: 1;
+}
+
+nav ul {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+}
+
+nav a {
+  text-decoration: none;
+  color: #EDEFEE;
+}
+
+nav a:hover {
+  color: #EE9972;
+  text-decoration: underline;
+}
+
+article {
+  font-family: "Karla";
+  font-style: normal;
+}
+
+article > p {
+  line-height: 1.5em;
+  font-weight: 400;
+}
+
+#navbar {
+  grid-column: 5/ span 6;
+  grid-row: 1;
+
+  display: grid;
+  grid-template-columns: subgrid;
+  align-content: center;
+
+  background-color: #495E57;
+  font-size: 18pt;
+}
+
+#navbar ul {
+  grid-column: 1/ span 6;
+
+  flex-flow: row wrap;
+  row-gap: 1vh;
+  column-gap: 1vw;
+  justify-content: space-evenly;
+}
+
+#navbar-burgernav {
+  display: none;
+}
+#sitenav-burgernav {
+  display: none;
+}
+
+main {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-template-rows: subgrid;
+  grid-column: 1/ span 12;
+  grid-row: 2/ span 4;
+  row-gap: inherit;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgb(51,51,51,0.2);
+  transition: 0.3s;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgb(51,51,51,0.8);
+}
+
+form {
+  grid-column: 4/ span 6;
+  grid-row: 1/ span 3;
+
+  color: #333333;
+}
+
+form fieldset {
+  border-color: #495E57;
+  border-radius: 16pt;
+  border-width: 4px;
+}
+
+form legend {
+  font-weight: 500;
+  background-color: #495E57;
+  color: #F4CE14;
+
+  padding: 1vw 1vh;
+  border-radius: 16pt;
+}
+
+form h3 {
+  font-weight: 600;
+  color: #495E57;
+}
+
+form h3 > nobr {
+  font-weight: 600;
+  color: #EE9972;
+}
+
+form label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+
+  width: 25%;
+  font-weight: 500;
+  font-size: 18pt;
+}
+
+form select {
+  width: fit-content;
+  margin-right: 20vw;
+}
+
+form input {
+  width: 70%;
+}
+
+form input[type=date] {
+  width: 25%;
+  margin-right: 15vw;
+}
+
+form input[type=range] {
+  accent-color: #EE9972;
+  margin-left: 12px;
+}
+
+form input[type=text] {
+  height: 1.5rem;
+  text-align: left;
+}
+
+form input[type=submit] {
+  margin-top: 5vh;
+}
+
+#landing-section {
+  grid-column: 3/ span 8;
+  grid-row: 1;
+
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-template-rows: auto auto auto 1fr;
+  justify-content: start;
+
+  font-family: 'Markazi Text';
+  font-weight: 400;
+}
+
+#landing-section > h1 {
+  grid-column: 1/ span 4;
+
+  margin-top: 5vh;
+  margin-bottom: 0;
+
+  font-size: 56pt;
+  font-weight: 500;
+  color: #495E57;
+}
+
+#landing-section > h2 {
+  grid-column: 1/ span 4;
+  margin-top: 0;
+
+  font-weight: 500;
+  color: #EE9972;
+}
+
+#landing-section > p {
+  grid-column: 1/ span 4;
+
+  font-size: 20pt;
+  width: 100%;
+  max-width: 40ch;
+  word-wrap: normal;
+}
+
+#landing-section > button {
+  grid-column: 1/ span 2;
+  justify-self: stretch;
+  align-self: center;
+}
+
+#landing-section > img {
+  grid-column: 5/ span 4;
+  grid-row: 1/ span 4;
+  justify-self: end;
+
+  margin-left: 5vw;
+  margin-bottom: 5vh;
+}
+
+#specials-section {
+  grid-column: 3/ span 8;
+  grid-row: 2;
+
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-template-rows: auto 1fr;
+  row-gap: 4vh;
+
+  max-width: 100%;
+}
+
+#specials-section > h1 {
+  grid-row: 1;
+  grid-column: 1/ span 2;
+
+  margin: 0;
+
+  font-family: 'Markazi Text';
+  font-weight: 500;
+  color: #495E57;
+}
+
+#specials-section > button {
+  grid-row: 1;
+  grid-column: 7/ span 2;
+  align-self: baseline;
+  justify-self: stretch;
+
+  padding: 15px;
+
+  font-family: 'Markazi Text';
+  font-weight: 500;
+  font-size: 18pt;
+}
+
+#specials-list {
+  grid-column: 1/ span 8;
+  grid-row: 2;
+
+  display: flex;
+  flex-flow: row;
+  gap: 2vw;
+
+  margin: 0 2vw 0 2vw;
+}
+
+#specials-list > li {
+  flex: 1 1 100%;
+  max-height:fit-content;
+}
+
+#specials-list .card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: 2fr 1fr 2fr 1fr;
+  height: 440px;
+  background-color: #EDEFEE;
+  padding: 1vw;
+}
+
+#specials-list .card > img {
+  grid-row: 1;
+  grid-column: 1/ span 2;
+
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  border-top-left-radius: 16pt;
+  border-top-right-radius: 16pt;
+}
+
+#specials-list .card > img + h4 {
+  grid-row: 2;
+  grid-column: 1;
+}
+
+#specials-list .card > h4.price {
+  grid-row: 2;
+  grid-column: 2;
+  color: #EE9972;
+  justify-self: right;
+}
+
+#specials-list .card > p {
+  grid-row: 3;
+  grid-column: 1/ span 2;
+  color:#495E57;
+}
+
+#specials-list .card > h4 {
+  grid-row: 4;
+  grid-column: 1/ span 2;
+}
+
+#reviews-section {
+  grid-column: 3/ span 8;
+  grid-row: 3;
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-template-rows: auto 1fr;
+  max-width: 100%;
+}
+
+#reviews-section > h2 {
+  grid-row: 1;
+  grid-column: 1/ span 8;
+  justify-self: center;
+
+  font-family: 'Markazi Text';
+  font-weight: 500;
+  font-size: 32pt;
+  color: #495E57;
+}
+
+#reviews-section > ul {
+  grid-row: 2;
+  grid-column: 1/ span 8;
+
+  display: flex;
+  flex-flow: row;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 2vw;
+
+  margin: 0;
+  padding: 0;
 }
 
-.App-link {
-  color: #61dafb;
+#reviews-section > ul > li {
+  min-width: 0;
+  flex: 1 1 100%;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+#reviews-section .card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr 1fr;
+
+  row-gap: 1vh;
+
+  background-color: #EDEFEE;
+  padding: 1vw;
+}
+
+#reviews-section .card > ul {
+  grid-row: 1;
+  grid-column: 1/ span 2;
+
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-flow: row;
+}
+
+.yellow {
+  color:#F4CE14;
+}
+
+.grey {
+  color:#333333;
+}
+
+#reviews-section .card > img {
+  grid-row: 2;
+  grid-column: 1/ span 1;
+  object-fit: cover;
+  border-radius: 50%;
+  /*width: 100%;
+  height: 100%;*/
+}
+
+#reviews-section .card > h4 {
+  grid-row: 2;
+  grid-column: 2/ span 1;
+
+  margin-left: 2vw;
+
+  justify-self: right;
+  align-self: center;
+
+  color: #EE9972;
+}
+
+#reviews-section .card > p {
+  grid-row: 3;
+  grid-column: 1/ span 2;
+
+  color: #495E57;
+}
+
+#about-section {
+  grid-column: 3/ span 8;
+  grid-row: 4;
+
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-template-rows: auto auto 1fr;
+  justify-content: start;
+
+  font-family: 'Markazi Text';
+  font-weight: 400;
+}
+
+#about-section > h1 {
+  grid-column: 1/ span 4;
+
+  margin-top: 5vh;
+  margin-bottom: 0;
+
+  font-size: 40pt;
+  font-weight: 500;
+  color: #495E57;
+}
+
+#about-section > h2 {
+  grid-column: 1/ span 4;
+  margin-top: 0;
+
+  font-weight: 500;
+  color: #EE9972;
+}
+
+#about-section > p {
+  grid-column: 1/ span 4;
+
+  font-size: 20pt;
+  width: 40ch;
+}
+
+#about-section > img {
+  object-fit: cover;
+  width: 85%;
+  height: auto;
+}
+
+#about-section > img.bottom {
+  grid-column: 6/ span 3;
+  grid-row: 1/ span 4;
+  align-self: baseline;
+  justify-self: end;
+
+  z-index: 1;
+}
+
+#about-section > img.top {
+  grid-column: 5/ span 3;
+  grid-row: 1/ span 4;
+
+  align-self: flex-end;
+  justify-self: start;
+}
+
+.myConfirmModal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  border: 1px solid #495E57;
+  background: #EDEFEE;
+  color: #333333;
+  overflow: auto;
+  border-radius: 16pt;
+  outline: none;
+  padding: 12px;
+}
+
+.myConfirmOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(237, 239, 238, 0.75);
+}
+
+.myWarningModal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  border: 1px solid #495E57;
+  background: #EDEFEE;
+  color: #333333;
+  overflow: auto;
+  border-radius: 4px;
+  outline: none;
+  padding: 20px;
+}
+
+.myWarningOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(238, 153, 114, 0.75);
+}
+
+
+footer {
+  grid-column: 1/ span 12;
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-row: 6;
+  background-color: #495E57;
+  padding: 1vh 0 1vh 0;
+  color: #EDEFEE;
+}
+
+footer h3 {
+  color: #F4CE14;
+}
+
+footer > img {
+  grid-column: 3/ span 2;
+  align-self:baseline;
+  justify-self: center;
+
+  object-fit: cover;
+  width: 100%;
+  height: 80%;
+}
+
+#sitenav-section {
+  grid-column: 5/ span 2;
+}
+
+#sitenav > ul {
+  flex-flow: column;
+  column-gap: 1em;
+  row-gap: 1em;
+  padding-left: 1em;
+}
+
+#contact {
+  grid-column: 7/ span 2;
+}
+
+#socials {
+  grid-column: 9/ span 3;
+}
+
+#socials > ul {
+  flex-flow: row wrap;
+  column-gap: 8px;
+}
+
+@media only screen and (max-width: 768px) {
+  #root {
+    display: grid;
+    margin: 0 1vw 0 1vw;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 1vw;
+    grid-template-rows: repeat(6, auto);
   }
-  to {
-    transform: rotate(360deg);
+
+  header {
+    grid-column: 1/ span 3;
+    grid-row: 1;
+  }
+
+  #navbar {
+    grid-column: 1/ span 4;
+    grid-row: 1;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-self: baseline;
+
+    background-color: rgb(0,0,0,0);
+  }
+
+  #navbar-burgernav {
+    grid-column: 2/ span 1;
+
+    display:block;
+    color: #495E57;
+
+    height: 100%;
+    width: 40%;
+
+    justify-self: end;
+  }
+
+  #navbar > ul {
+    display: none;
+    background-color: #495E57;
+  }
+
+  #navbar > ul.open {
+    grid-column: 1/ span 2;
+    grid-row: 2;
+
+    display: flex;
+    flex-flow: row wrap;
+    align-self: baseline;
+
+    margin: 0;
+    padding-left: 1vw;
+  }
+
+  main {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-template-rows: subgrid;
+    grid-column: 1/ span 4;
+    grid-row: 2/ span 4;
+    row-gap: inherit;
+  }
+
+  form {
+    grid-column: 1/ span 4;
+    grid-row: 2;
+  }
+
+  #landing-section {
+    grid-column: 1/ span 4;
+    grid-row: 1;
+
+    display: flex;
+    flex-flow: column;
+  }
+
+  #landing-section > img {
+    order: 1;
+    margin: 0;
+  }
+
+  #landing-section > h1 {
+    order: 2;
+
+    /*margin-top: 5vh;
+    margin-bottom: 0;*/
+
+    font-size: 50pt;
+    font-weight: 500;
+    color: #495E57;
+  }
+
+  #landing-section > h2 {
+    order: 3;
+    margin-top: 0;
+
+    font-weight: 500;
+    color: #EE9972;
+  }
+
+  #landing-section > p {
+    order: 4;
+
+    font-size: 20pt;
+    width: 95%;
+  }
+
+  #landing-section > button {
+    order: 5;
+    justify-self: stretch;
+    align-self: flex-start;
+
+    padding: 15px;
+
+    font-weight: 500;
+    font-size: 18pt;
+  }
+
+  #specials-section {
+    grid-column: 1/ span 4;
+    grid-row: 2;
+
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-template-rows: auto 1fr;
+    row-gap: 4vh;
+    column-gap: 10vw;
+
+    max-width: 100%;
+  }
+
+  #specials-section > h1 {
+    grid-row: 1;
+    grid-column: 1/ span 2;
+
+    margin: 0;
+
+    font-family: 'Markazi Text';
+    font-weight: 500;
+    color: #495E57;
+  }
+
+  #specials-section > button {
+    grid-row: 1;
+    grid-column: 3/ span 2;
+    align-self: baseline;
+    justify-self: stretch;
+
+    padding: 15px;
+
+    font-family: 'Markazi Text';
+    font-weight: 500;
+    font-size: 18pt;
+  }
+
+  #specials-list {
+    grid-column: 1/ span 4;
+    grid-row: 2;
+
+    display: flex;
+    flex-flow: row wrap;
+    gap: 2vw;
+
+    margin: 0 2vw 0 2vw;
+  }
+
+  #specials-list .card {
+    height: 50vh;
+  }
+
+  #reviews-section {
+    grid-column: 1/ span 4;
+    grid-row: 3;
+  }
+
+  #reviews-section > h2 {
+    grid-row: 1;
+    grid-column: 1/ span 4;
+    justify-self: center;
+  }
+
+  #reviews-section > ul {
+    grid-row: 2;
+    grid-column: 1/ span 4;
+
+    flex-flow: row wrap;
+  }
+
+  #reviews-section > ul > li {
+    min-width: 30%;
+    flex: 1 1 45%;
+  }
+
+  #reviews-section .card {
+    grid-template-rows: auto 1fr 2fr;
+  }
+
+  #about-section {
+    grid-column: 1/ span 4;
+    grid-row: 4;
+
+    display: flex;
+    flex-flow: column;
+  }
+
+  #about-section > h1 {
+    order: 2;
+
+    margin-top: 5vh;
+    margin-bottom: 0;
+
+    font-size: 40pt;
+    font-weight: 500;
+    color: #495E57;
+  }
+
+  #about-section > h2 {
+    order: 3;
+    margin-top: 0;
+
+    font-weight: 500;
+    color: #EE9972;
+  }
+
+  #about-section > p {
+    order: 4;
+
+    font-size: 20pt;
+    width: 95%;
+  }
+
+  #about-section > img {
+    order: 1;
+    object-fit: cover;
+    width: 85%;
+    height: auto;
+  }
+
+  #about-section > img.bottom {
+    align-self: end;
+  }
+
+  #about-section > img.top {
+    align-self: flex-start;
+    margin-top: 2vh;
+  }
+
+  footer {
+    grid-column: 1/ span 4;
+    display: flex;
+    flex-flow: column;
+    grid-row: 6;
+    padding: 2vw 2vh 2vw 2vh;
+    background-color: #495E57;
+    color: #EDEFEE;
+  }
+
+  footer h3 {
+    color: #F4CE14;
+  }
+
+  footer img {
+    order: 4;
+    align-self: center;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  #sitenav-section {
+    order: 1;
+  }
+
+  #contact {
+    order: 3
+  }
+
+  #socials {
+    order: 2;
+  }
+
+  #socials > ul {
+    flex-flow: row wrap;
+    margin-left: 5vw;
+    justify-self: center;
+    column-gap: 10vw;
   }
 }

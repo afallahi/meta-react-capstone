@@ -1,10 +1,10 @@
 import Logo from "../Logo.svg"
 
-function Header () {
+const Header = () => {
     return (
-        <div>
+        <header>
             <img src={Logo} alt="logo"/>
-        </div>
+        </header>
     );
 }
 
